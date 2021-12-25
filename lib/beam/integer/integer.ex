@@ -1,7 +1,5 @@
 defmodule Integers do
-  def start do
-    Integer.is_even(10)
-  end
+
 
   def start2 do
     Integer.is_odd(6)
