@@ -77,7 +77,7 @@ defmodule Example_Ke do
   end
 
   def start16 do
-    Keyword.replace_laz([a: 2, b: 2, a: 2], :a, fn v -> v * 4 end)
+    Keyword.replace_lazy([a: 2, b: 2, a: 2], :a, fn v -> v * 4 end)
   end
 
   def start17 do

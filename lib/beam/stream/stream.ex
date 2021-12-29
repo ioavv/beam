@@ -220,4 +220,15 @@ defmodule Example_Str do
     cycle = Stream.cycle(["foo", "bar", "baz"])
     Stream.zip([concat, [:a, :b, :c], cycle]) |> Enum.to_list()
   end
+
+  def start39 do
+    concat = Stream.concat(1..4, 5..9)
+    cycle = Stream.cycle([:a, :b, :c])
+    Stream.zip(concat, cycle) |> Enum.to_list()
+  end
+
+  def start40 do
+    concat = Stream.concat(1..3, 4..6)
+    Stream.zip_with([concat, concat], fn [a, b] -> a + b end) |> Enum.to_list()
+  end
 end
