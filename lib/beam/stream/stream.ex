@@ -97,4 +97,127 @@ defmodule Example_Str do
       x when is_integer(x) -> x
     end
   end
+
+  def start17 do
+    stream = Stream.flat_map([1, 2, 3, 4], fn x -> [x, x * 5] end)
+    Enum.to_lust(stream)
+  end
+
+  def start18 do
+    stream = Stream.flat_map([1, 2, 3], fn x -> [[x]] end)
+    Enum.to_list(stream)
+  end
+
+  def start19 do
+    stream = Stream.intersperse([1, 2, 3, 4], 33) |> Enum.to_list()
+  end
+
+  def start20 do
+    Stream.interval(20) |> Enum.take(15)
+  end
+
+  def start21 do
+    Stream.iterate(3, &(&1 * 44)) |> Enum.take(7)
+  end
+
+  def start22 do
+    stream = Stream.map([1, 2, 3], fn x -> x * 23 end)
+    Enum.to_list(stream)
+  end
+
+  def start23 do
+    stream = Stream.map_every(1..30, 2, fn x -> x * 4 end)
+    Enum.to_list(stream)
+  end
+
+  def start24 do
+    stream = Stream.reject([1, 2, 3], fn x -> rem(x, 2) == 0 end)
+    Enum.to_list(stream)
+  end
+
+  def start25 do
+    :rand.seed(:exsss, {1, 2, 3})
+    Stream.repeatedly(&:rand.uniform/0) |> Enum.take(3)
+  end
+
+  def start26 do
+    Stream.resource(
+      fn ->
+        {:ok, pid} = StringIO.open("string")
+        pid
+      end,
+      fn pid ->
+        case IO.getn(pid, "", 1) do
+          :eof -> {:halt, pid}
+          char -> {[char], pid}
+        end
+      end,
+      fn pid -> StringIO.close(pid) end
+    ) |> Enum.to_list()
+  end
+
+  def start27 do
+    stream = Stream.scan(1..10, &(&1 + &2))
+    Enum.to_list(stream)
+  end
+
+  def start28 do
+    stream = Stream.scan(1..10, 0, &(&1 + &2))
+    Enum.to_list(stream)
+  end
+
+  def start29 do
+    stream = Stream.take(1..100, 5)
+    Enum.to_list(stream)
+  end
+
+  def start30 do
+    stream = Stream.take_every(1..40, 3)
+    Enum.to_list(stream)
+  end
+
+  def start31 do
+    stream = Stream.take_while(1..100, &(&1 <= 50))
+    Enum.to_list(stream)
+  end
+
+  def start32 do
+    Stream.timer(10) |> Enum.to_list()
+  end
+
+  def start33 do
+    enum = 1001..9999
+    n = 3
+    stream = Stream.transform(enum, 0, fn i, acc ->
+      if acc < n, do: {[i], acc + 1}, else: {:halt, acc}
+    end)
+
+    Enum.to_list(stream)
+  end
+
+  def start34 do
+    Stream.unfold(5, fn
+      0 -> nil
+      n -> {n, n - 1}
+    end) |> Enum.to_list()
+  end
+
+  def start35 do
+    Stream.uniq([1, 2, 2, 3, 3, 3, 4, 5, 5]) |> Enum.to_list()
+  end
+
+  def start36 do
+    Stream.uniq_by([a: {:tea, 2}, b: {:tea, 2}, c: {:coffee, 1}], fn {_, y} -> y end) |> Enum.to_list()
+  end
+
+  def start37 do
+    stream = Stream.with_index([1, 2, 3, 4, 5], 3)
+    Enum.to_list(stream)
+  end
+
+  def start38 do
+    concat = Stream.concat(1..3, 4..6)
+    cycle = Stream.cycle(["foo", "bar", "baz"])
+    Stream.zip([concat, [:a, :b, :c], cycle]) |> Enum.to_list()
+  end
 end
