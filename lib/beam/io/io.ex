@@ -37,4 +37,12 @@ defmodule Exxample_IO do
     bin3 = <<6>>
     IO.iodata_to_binary([bin1, 1, [2, 3, bin2], 4 | bin3])
   end
+
+  def start9 do
+    IO.puts("Hello World!")
+  end
+
+  def start10 do
+    IO.write("sample")
+  end
 end
