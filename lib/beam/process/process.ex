@@ -36,4 +36,9 @@ defmodule Example_Pr do
     Process.register(self(), :test)
     Process.registered()
   end
+
+  def start8 do
+    Process.send({:name, :node_that_does_not_exist}, :hi, [:noconnect])
+  end
+
 end
