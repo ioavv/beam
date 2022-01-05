@@ -9,7 +9,7 @@ defmodule Example_Ma do
   end
 
   def start3 do
-    map = %{one: 1, teo: 2}
+    map = %{one: 1, two: 2}
     %{map | one: "one"}
   end
 

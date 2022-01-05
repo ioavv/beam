@@ -119,4 +119,29 @@ defmodule Example_Macro do
     ast = quote do: foo(1, "abc")
     Enum.map(Macro.prewalker(ast), & &1)
   end
+
+  def start14 do
+    Macro.to_string(quote(do: 1 + 2), fn
+      1, _string -> "one"
+      2, _string -> "two"
+      _ast, string -> string
+    end)
+  end
+
+  def start15 do
+    {:foo, [counter: c], __MODULE__} = Macro.unique_var(:foo, __MODULE__)
+    is_integer(c)
+  end
+
+  def start16 do
+    Macro.unpipe(quote do: 100 |> div(5) |> div(2))
+  end
+
+  def start17 do
+    Macro.validate({:two_element, :tuple})
+  end
+
+  def start18 do
+    Macro.var(:foo, __MODULE__)
+  end
 end
